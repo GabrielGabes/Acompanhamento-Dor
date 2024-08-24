@@ -1,0 +1,8 @@
+"0","# Transformando para o formato longo"
+"0","df$ID = 1:nrow(df)"
+"0","dados_long = pivot_longer(df, cols = starts_with('nota_da_dor'),"
+"0","                          names_to = ""momentos"", values_to = ""medida_numerica"")"
+"0","dados_long$mes = factor(dados_long$mes, levels = c('Janeiro', 'Fevereiro', 'Março', "
+"0","                                                   'Abril', 'Maio', 'Junho', 'Julho'))"
+"0","dados_long_bckp = dados_long"
+"0","dados_long"

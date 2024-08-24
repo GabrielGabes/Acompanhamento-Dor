@@ -1,0 +1,537 @@
+"0",""
+"0","for (i in dados_long_bckp$setor %>% as.factor() %>% levels()){"
+"0","  print(i)"
+"0","  df = df_bckp %>% filter(setor == i)"
+"0","  dados_long = dados_long_bckp %>% filter(setor == i)"
+"0",""
+"0","  graficos_notas = ggplot() +"
+"0","    geom_boxplot(data=dados_long, aes(x=as.factor(momentos), y=medida_numerica, color=as.factor(momentos)),"
+"0","                 alpha=0.5, fill = 'white', show.legend = F) +"
+"0","    geom_point(data=dados_long, aes(x=as.factor(momentos), y=medida_numerica, color=as.factor(momentos)),"
+"0","               alpha=0.5, size=2.5, show.legend = F) +"
+"0","    geom_line(data=dados_long, aes(x=as.factor(momentos), y=medida_numerica, color='grey', group = ID), color='grey',"
+"0","              alpha=0.1, show.legend = F) +"
+"0","    labs(x=NULL, y='Notas da Dor (n)', title=NULL) +"
+"0","    scale_x_discrete(labels=c('Avaliação','Reavaliação')) +"
+"0","    theme(legend.position = ""none"") + theme_bw() +"
+"0","    facet_grid(~mes)"
+"0","  #graficos_notas"
+"0","  #ggsave(""Graficos/Boxplot_pareado_por_mes.png"", height=15, width=35, units=""cm"", dpi= 600)"
+"0","  ############################################################################"
+"0","  "
+"0","  coluna1 = 'reavaliacao_com_diminuicao_do_score_de_dor_em_ate_3_pontos'"
+"0","  grafi1 = df %>% "
+"0","    group_by(mes, !!sym(coluna1)) %>% "
+"0","    summarise(n = n()) %>% "
+"0","    mutate(frequencia = round(n/sum(n)*100, 2)) %>%"
+"0","    ungroup() %>%"
+"0","    filter(!!sym(coluna1) == TRUE) %>%"
+"0","    mutate(coluna = coluna1)"
+"0","  "
+"0","  coluna2 = 'reavaliacao_em_ate_1_hora'"
+"0","  grafi2 = df %>% "
+"0","    group_by(mes, !!sym(coluna2)) %>% "
+"0","    summarise(n = n()) %>% "
+"0","    mutate(frequencia = round(n/sum(n)*100, 2)) %>%"
+"0","    ungroup() %>%"
+"0","    filter(!!sym(coluna2) == TRUE) %>%"
+"0","    mutate(coluna = coluna2)"
+"0","  "
+"0","  combined_grafi = bind_rows(grafi1, grafi2)"
+"0","  combined_grafi$texto = paste0(round(combined_grafi$n, 0), ' (', round(combined_grafi$frequencia, 1), '%)')"
+"0","  combined_grafi"
+"0","  "
+"0","  graficos_med = ggplot(combined_grafi, "
+"0","                        aes(x=as.factor(coluna), y=frequencia, label=frequencia, fill=as.factor(coluna))) +"
+"0","    geom_col(color=""black"") +"
+"0","    geom_text(aes(y=frequencia, label = texto, vjust=-0.5)) +"
+"0","    theme_bw() + theme(legend.position = ""bottom"") + theme("
+"0","      axis.text.x = element_blank(), # Remove os textos do eixo x"
+"0","      axis.ticks.x = element_blank()  # Remove os ticks do eixo x"
+"0","    ) +"
+"0","    scale_y_continuous(limits = c(0, 100), breaks=seq(from = 0, to = 100, by = 20)) +"
+"0","    scale_fill_manual(values = c('#00bbf9','#00f5d4'),"
+"0","                      labels = c('Reavaliação com Diminuição do Score em até 3 pontos', 'Reavaliação em até 1H')) +"
+"0","    labs(x=NULL, y=""Frequency (%)"", title =NULL, fill=NULL) +"
+"0","    facet_grid(~mes) "
+"0","  #graficos_med"
+"0","  #ggsave(""Graficos/Contagem_por_mes.png"", height=15, width=35, units=""cm"", dpi= 600)"
+"0","  "
+"0","  # Combinar os gráficos com um título geral"
+"0","  combined_plot <- graficos_notas / graficos_med + "
+"0","    plot_annotation(title = i, "
+"0","                    theme = theme(plot.title = element_text(hjust = 0.5)))"
+"0","  ggsave(paste0(""Graficos/"",i,"".png""), plot = combined_plot, height=25, width=35, units=""cm"", dpi= 600)"
+"0","}"
+"1","[1]"
+"1"," ""1º andar Endoscopia"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""1º Andar UI Adulto"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""1º Andar UI Infantil"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""1º Andar UTI Adulto"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""1º Andar UTI Infantil"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""2º Andar Hospital UI"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""2º Andar UTI Adulto"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""4° andar UI Hospital"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""4º A UTI Ped B"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""4º Andar UTI Adulto"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""4º Andar UTI Ped A"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""5º Andar  Ala B UI"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""5º Andar Ala A UI"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""6º Andar  Ala B UI"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""6º andar UICB"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""6º Andar UTI Adulto Ala A"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""6º Andar UTI Adulto Ala B"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""6º Andar UTI Cardiológica"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Aguardando Vaga  P.S. (MRB)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Aguardando Vaga  P.S. Infantil"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Ala Pré e Pós Operatório 4º andar"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Ambulatório (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Centro Cirúrgico"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Centro Cirurgico- RPA"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Centro Cirúrgico - Ala Pré e Pós Operatório 4º andar"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Centro Cirúrgico (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Endoscopia Digestiva e Respiratória (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Fisioterapia (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Fonoaudiologia (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Laboratório de Anatomia - Morumbi"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Pronto Socorro Adulto- 1º Andar UI"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Pronto Socorro Adulto - 1º Andar UTI"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Pronto Socorro Adulto - Aguardando Vaga (MRB)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Pronto Socorro Adulto (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Pronto Socorro Infantil- 1º Andar UTI"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Pronto Socorro Infantil - Aguardando Vaga"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Pronto Socorro Infantil (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""Repouso Pronto Socorro - Adulto"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""RPA Centro Cirurgico"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT- 1º andar Endoscopia"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT- Endoscopia Digestiva e Respiratória (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT- Laboratório de Anatomia - Morumbi"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT Análises Clínicas (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT Cardiologia (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT Raio-X e Arco Cirúrgico  (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT Ressonancia (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT Tomografia (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""SADT Ultrassonografia Geral (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UI- 2º Andar Hospital"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UI- 5º Andar  Ala B"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UI- 5º Andar Ala A"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UI- 6º Andar  Ala B"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UI- Fisioterapia (MR)"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UTI Adult- 4º Andar"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UTI Adulto Ala A- 6º Andar"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UTI Adulto Ala B- 6º Andar"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UTI Cardiológica- 6º Andar"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UTI Ped A- 4º Andar"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[1]"
+"1"," ""UTI Ped B- 4º A"""
+"1","
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
+"1","[38;5;254m`summarise()` has grouped output by 'mes'. You can override using the `.groups` argument.[39m
+"
