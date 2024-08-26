@@ -1,7 +1,8 @@
-```{r}
+```{r, include = FALSE}
 source('https://raw.githubusercontent.com/GabrielGabes/Codigos-uteis/main/R%20program/executar_sempre.R')
 ```
 
+# Carregando base
 
 ```{r}
 library(readxl)
@@ -42,9 +43,12 @@ df_final <- lapply(arquivos, function(arquivo) {
 
 # Exibindo o DataFrame final
 df = df_final
-df
-
+head(df)
 ```
+
+
+# Renomeando colunas
+
 ```{r}
 # Função para normalizar os nomes das colunas
 library(stringr)
@@ -74,12 +78,12 @@ df = normalize_column_names(df)
 df_bckp = df
 df_bckp$mes = factor(df_bckp$mes, levels = c('Janeiro', 'Fevereiro', 'Março', 
                                              'Abril', 'Maio', 'Junho', 'Julho'))
-df
+head(df)
 ```
 
-# Preparando os dados para gerar os boxplots
+# Preparando os dados para gerar os boxplots pareados, voltando os dados ao formato longituginal
 
-```{r}
+```{r Transformando para o formato longo}
 # Transformando para o formato longo
 df$ID = 1:nrow(df)
 dados_long = pivot_longer(df, cols = starts_with('nota_da_dor'),
@@ -87,11 +91,12 @@ dados_long = pivot_longer(df, cols = starts_with('nota_da_dor'),
 dados_long$mes = factor(dados_long$mes, levels = c('Janeiro', 'Fevereiro', 'Março', 
                                                    'Abril', 'Maio', 'Junho', 'Julho'))
 dados_long_bckp = dados_long
-dados_long
+head(dados_long)
 ```
 
+# Gerando Grafico Geral
 
-```{r}
+```{r grafico geral}
 graficos_notas = ggplot() +
   geom_boxplot(data=dados_long, aes(x=as.factor(momentos), y=medida_numerica, color=as.factor(momentos)),
                alpha=0.5, fill = 'white', show.legend = F) +
@@ -154,10 +159,9 @@ print(combined_plot)
 ggsave("Graficos/Geral.png", height=25, width=35, units="cm", dpi= 600)
 ```
 
+# Gerando Grafico para cada setor
 
-
-
-```{r}
+```{r grafico para cada setor}
 
 for (i in dados_long_bckp$setor %>% as.factor() %>% levels()){
   print(i)
@@ -221,24 +225,9 @@ for (i in dados_long_bckp$setor %>% as.factor() %>% levels()){
   combined_plot <- graficos_notas / graficos_med + 
     plot_annotation(title = i, 
                     theme = theme(plot.title = element_text(hjust = 0.5)))
+  print(combined_plot)
   ggsave(paste0("Graficos/",i,".png"), plot = combined_plot, height=25, width=35, units="cm", dpi= 600)
 }
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
 ```
 
 

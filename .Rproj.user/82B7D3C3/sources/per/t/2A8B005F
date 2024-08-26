@@ -1,9 +1,9 @@
 {
     "id": "2A8B005F",
-    "path": "~/Freelances/Acompanhamento dor/graficos.Rmd",
-    "project_path": "graficos.Rmd",
+    "path": "~/Freelances/Acompanhamento dor/Gerando_Graficos.Rmd",
+    "project_path": "Gerando_Graficos.Rmd",
     "type": "r_markdown",
-    "hash": "3422398206",
+    "hash": "1456623475",
     "contents": "",
     "dirty": false,
     "created": 1724451663943.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "15,41",
-        "scrollLine": "5"
+        "cursorPosition": "18,41",
+        "scrollLine": "6"
     },
     "folds": "",
-    "lastKnownWriteTime": 1724475345,
+    "lastKnownWriteTime": 1724514336,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1724475346306,
+    "last_content_update": 1724514336516,
     "read_only": false,
     "read_only_alternatives": []
 }
